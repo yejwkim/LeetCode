@@ -1,3 +1,3 @@
 # LeetCode
 
-Leetcode Journey
+My Leetcode Journey
