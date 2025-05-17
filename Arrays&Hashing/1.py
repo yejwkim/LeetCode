@@ -1,4 +1,4 @@
-# Two Sum
+# Two Sum - Easy
 from typing import List
 
 class Solution:
