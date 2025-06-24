@@ -23,17 +23,37 @@ class ListNode:
         return " -> ".join(result)
 
 class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        if head is None:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
             return None
-        dummy = ListNode(0, head)
-        slow = fast = dummy
-        for _ in range(n):
-            fast = fast.next
-        while fast.next:
-            slow = slow.next
-            fast = fast.next
-        slow.next = slow.next.next
+        dummy = ListNode()
+        cur = dummy
+        while head:
+            a = head
+            if head.next:
+                b = head.next
+                cur.next = b
+                cur = cur.next
+                next_node = head.next.next
+                head = next_node
+            else:
+                head = head.next
+            cur.next = a
+            cur = cur.next
+        cur.next = None
+        return dummy.next
+
+    def swapPairs2(self, head: Optional[ListNode]) -> Optional[ListNode]: # Optimal Solution
+        dummy = ListNode()
+        dummy.next = head
+        cur = dummy
+        while cur.next and cur.next.next:
+            first = cur.next
+            second = cur.next.next
+            first.next = second.next
+            second.next = first
+            cur.next = second
+            cur = first
         return dummy.next
 
 def build_linked_list(values):
@@ -46,16 +66,17 @@ def build_linked_list(values):
 
 def main():
     test_cases = [
-        ([1,2,3,4,5], 2), # [1,2,3,5]
-        ([1], 1), # []
-        ([1,2], 1) # [1]
+        [1,2,3,4], # [2,1,4,3]
+        [], # []
+        [1], # [1]
+        [1,2,3] # [2,1,3]
     ]
     solution = Solution()
-    for i, (values, n) in enumerate(test_cases):
+    for i, values in enumerate(test_cases):
         head = build_linked_list(values)
         print(f"Test Case {i+1}")
         print("Input linked list:", head)
-        print("Output:", solution.removeNthFromEnd(head, n))
+        print("Output:", solution.swapPairs2(head))
         print()
 
 if __name__ == "__main__":

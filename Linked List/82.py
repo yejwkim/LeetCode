@@ -1,4 +1,4 @@
-# Palindrome Linked List - Easy
+# Remove Duplicates from Sorted List II - Medium
 from typing import Optional
 
 # Definition for singly-linked list.
@@ -6,7 +6,7 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
-        
+
     def __str__(self):
         result = []
         current = self
@@ -21,29 +21,24 @@ class ListNode:
             current = current.next
             count += 1
         return " -> ".join(result)
-
+    
 class Solution:
-    def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        if head is None:
-            return False
-        slow = fast = head
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
-        prev = None
-        while slow:
-            temp = slow.next
-            slow.next = prev
-            prev = slow
-            slow = temp
-        while prev and head:
-            if prev.val != head.val:
-                return False
-            prev = prev.next
-            head = head.next
-        return True
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+        cur = dummy
+        while head:
+            if not head.next or head.val != head.next.val:
+                cur.next = head
+                head = head.next
+                cur = cur.next
+            else:
+                dup = head.val
+                while head and head.val == dup:
+                    head = head.next
+        cur.next = None
+        return dummy.next
 
-def buildLinkedList(values):
+def build_linked_list(values):
     dummy = ListNode()
     current = dummy
     for val in values:
@@ -53,17 +48,16 @@ def buildLinkedList(values):
 
 def main():
     test_cases = [
-        [1,2,2,1], # true
-        [1,2], # false
-        [1,2,3,4,3,2,1],
-        [1,2,3,3,2,1]
+        [1,2,3,3,4,4,5], # [1,2,5]
+        [1,1,1,2,3], # [2,3]
+        [1,2,3,3,3] # [1,2]
     ]
     solution = Solution()
     for i, values in enumerate(test_cases):
-        head = buildLinkedList(values)
+        head = build_linked_list(values)
         print(f"Test Case {i+1}")
-        print("Input head:", head)
-        print("Output:", solution.isPalindrome(head))
+        print("Input linked list:", head)
+        print("Output:", solution.deleteDuplicates(head))
         print()
 
 if __name__ == "__main__":

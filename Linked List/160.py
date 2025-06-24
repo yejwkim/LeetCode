@@ -55,8 +55,9 @@ class Solution:
             return None
         a, b = headA, headB
         while a != b:
-            a = headB if a is None else a.next
-            b = headA if b is None else b.next
+            a = headB if not a else a.next
+            b = headA if not b else b.next
+            print(a, b, sep="; ")
         return a
 
 def build_list(values):
@@ -104,7 +105,7 @@ def main():
         print(f"Test Case {i+1}")
         print("Input linked list A:", headA)
         print("Input linked list B:", headB)
-        result = solution.getIntersectionNode(headA, headB)
+        result = solution.getIntersectionNode2(headA, headB)
         print("Output:", result.val if result else "No intersection")
         print()
 
