@@ -1,4 +1,4 @@
-# Linked List Cycle - Easy
+# Reverse Linked List - Easy
 from typing import Optional
 
 # Definition for singly-linked list.
@@ -21,55 +21,40 @@ class ListNode:
             current = current.next
             count += 1
         return " -> ".join(result)
-    
-class Solution:
-    def hasCycle(self, head: Optional[ListNode]) -> bool:
-        return False
 
-def build_linked_list(values, pos):
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+        prev = None
+        while head:
+            temp = head.next
+            head.next = prev
+            prev = head
+            head = temp
+        return prev
+
+def build_linked_list(values):
     dummy = ListNode()
     current = dummy
-    nodes = []
     for val in values:
         current.next = ListNode(val)
         current = current.next
-        nodes.append(current)
-    if pos != -1:
-        current.next = nodes[pos]  # Create the cycle
     return dummy.next
 
 def main():
     test_cases = [
-        ([3,2,0,-4], 1), # true
-        ([1,2], 0), # true
-        ([1], -1) # false
+        ([1,2,3,4,5]), # [5,4,3,2,1]
+        ([1,2]), # [2, 1]
+        ([]) # []
     ]
     solution = Solution()
-    for i, (values, pos) in enumerate(test_cases):
-        head = build_linked_list(values, pos)
+    for i, values in enumerate(test_cases):
+        head = build_linked_list(values)
         print(f"Test Case {i+1}")
         print("Input linked list:", head)
-        print("Output:", solution.hasCycle(head))
+        print("Output:", solution.reverseList(head))
         print()
 
 if __name__ == "__main__":
     main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        #     if head is None or head.next is None:
-        #     return False
-        # slow = fast = head
-        # while fast and fast.next:
-        #     slow = slow.next
-        #     fast = fast.next.next
-        #     if slow == fast:
-        #         return True
-        # return False

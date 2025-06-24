@@ -24,25 +24,7 @@ class ListNode:
 
 class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
-        if head is None:
-            return False
-        slow = fast = head
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
-        prev = None
-        while slow:
-            next_temp = slow.next
-            slow.next = prev
-            prev = slow
-            slow = next_temp
-        left, right = head, prev
-        while right:
-            if left.val != right.val:
-                return False
-            left = left.next
-            right = right.next
-        return True
+        return False
 
 def buildLinkedList(values):
     dummy = ListNode()
@@ -69,3 +51,33 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        #     if head is None:
+        #     return False
+        # slow = fast = head
+        # while fast and fast.next:
+        #     slow = slow.next
+        #     fast = fast.next.next
+        # prev = None
+        # while slow:
+        #     next_temp = slow.next
+        #     slow.next = prev
+        #     prev = slow
+        #     slow = next_temp
+        # left, right = head, prev
+        # while right:
+        #     if left.val != right.val:
+        #         return False
+        #     left = left.next
+        #     right = right.next
+        # return True

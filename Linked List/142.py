@@ -24,18 +24,6 @@ class ListNode:
     
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if head is None or head.next is None:
-            return None
-        slow = fast = head
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
-            if slow == fast:
-                slow = head
-                while slow != fast:
-                    slow = slow.next
-                    fast = fast.next
-                return slow
         return None
 
 def build_linked_list(values, pos):
@@ -66,3 +54,26 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        #     if head is None or head.next is None:
+        #     return None
+        # slow = fast = head
+        # while fast and fast.next:
+        #     slow = slow.next
+        #     fast = fast.next.next
+        #     if slow == fast:
+        #         slow = head
+        #         while slow != fast:
+        #             slow = slow.next
+        #             fast = fast.next
+        #         return slow
+        # return None

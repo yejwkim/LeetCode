@@ -1,4 +1,4 @@
-# Linked List Cycle - Easy
+# Remove Linked List Elements - Easy
 from typing import Optional
 
 # Definition for singly-linked list.
@@ -21,55 +21,40 @@ class ListNode:
             current = current.next
             count += 1
         return " -> ".join(result)
-    
-class Solution:
-    def hasCycle(self, head: Optional[ListNode]) -> bool:
-        return False
 
-def build_linked_list(values, pos):
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        dummy = ListNode()
+        cur = dummy
+        while head:
+            if head.val != val:
+                cur.next = head
+                cur = cur.next
+            head = head.next
+        cur.next = None
+        return dummy.next
+
+def build_linked_list(values):
     dummy = ListNode()
     current = dummy
-    nodes = []
     for val in values:
         current.next = ListNode(val)
         current = current.next
-        nodes.append(current)
-    if pos != -1:
-        current.next = nodes[pos]  # Create the cycle
     return dummy.next
 
 def main():
     test_cases = [
-        ([3,2,0,-4], 1), # true
-        ([1,2], 0), # true
-        ([1], -1) # false
+        ([1,2,6,3,4,5,6], 6), # [1,2,3,4,5]
+        ([], 1), # []
+        ([7,7,7,7], 7) # []
     ]
     solution = Solution()
-    for i, (values, pos) in enumerate(test_cases):
-        head = build_linked_list(values, pos)
+    for i, (values, val) in enumerate(test_cases):
+        head = build_linked_list(values)
         print(f"Test Case {i+1}")
         print("Input linked list:", head)
-        print("Output:", solution.hasCycle(head))
+        print("Output:", solution.removeElements(head, val))
         print()
 
 if __name__ == "__main__":
     main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        #     if head is None or head.next is None:
-        #     return False
-        # slow = fast = head
-        # while fast and fast.next:
-        #     slow = slow.next
-        #     fast = fast.next.next
-        #     if slow == fast:
-        #         return True
-        # return False

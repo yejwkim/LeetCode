@@ -17,7 +17,7 @@ class ListNode:
 
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if head is None:
+        if not head:
             return None
         slow = fast = head
         while fast and fast.next:

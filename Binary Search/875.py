@@ -3,9 +3,15 @@ from typing import List
 
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        left, right = 0, max(piles)
-        print(left, right)
-        return 0
+        left, right = 1, max(piles)
+        while left < right:
+            mid = (left + right) // 2
+            hours = sum((pile + mid - 1) // mid for pile in piles)
+            if hours > h:
+                left = mid + 1
+            else:
+                right = mid
+        return left
 
 def main():
     test_cases = [

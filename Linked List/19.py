@@ -24,15 +24,7 @@ class ListNode:
 
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode(0, head)
-        slow = fast = dummy
-        for _ in range(n):
-            fast = fast.next
-        while fast.next:
-            slow = slow.next
-            fast = fast.next
-        slow.next = slow.next.next
-        return dummy.next
+        return None
 
 def build_linked_list(values):
     dummy = ListNode()
@@ -58,3 +50,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+    
+    
+    
+    
+    
+        #     dummy = ListNode(0, head)
+        # slow = fast = dummy
+        # for _ in range(n):
+        #     fast = fast.next
+        # while fast.next:
+        #     slow = slow.next
+        #     fast = fast.next
+        # slow.next = slow.next.next
+        # return dummy.next

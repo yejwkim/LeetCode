@@ -1,4 +1,4 @@
-# Linked List Cycle - Easy
+# Remove Duplicates from Sorted List - Easy
 from typing import Optional
 
 # Definition for singly-linked list.
@@ -23,53 +23,35 @@ class ListNode:
         return " -> ".join(result)
     
 class Solution:
-    def hasCycle(self, head: Optional[ListNode]) -> bool:
-        return False
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        cur = head
+        while cur and cur.next:
+            if cur.val == cur.next.val:
+                cur.next = cur.next.next
+            else:
+                cur = cur.next
+        return head
 
-def build_linked_list(values, pos):
+def build_linked_list(values):
     dummy = ListNode()
     current = dummy
-    nodes = []
     for val in values:
         current.next = ListNode(val)
         current = current.next
-        nodes.append(current)
-    if pos != -1:
-        current.next = nodes[pos]  # Create the cycle
     return dummy.next
 
 def main():
     test_cases = [
-        ([3,2,0,-4], 1), # true
-        ([1,2], 0), # true
-        ([1], -1) # false
+        [1,1,2], # [1,2]
+        [1,1,2,3,3] # [1,2,3]
     ]
     solution = Solution()
-    for i, (values, pos) in enumerate(test_cases):
-        head = build_linked_list(values, pos)
+    for i, values in enumerate(test_cases):
+        head = build_linked_list(values)
         print(f"Test Case {i+1}")
         print("Input linked list:", head)
-        print("Output:", solution.hasCycle(head))
+        print("Output:", solution.deleteDuplicates(head))
         print()
 
 if __name__ == "__main__":
     main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        #     if head is None or head.next is None:
-        #     return False
-        # slow = fast = head
-        # while fast and fast.next:
-        #     slow = slow.next
-        #     fast = fast.next.next
-        #     if slow == fast:
-        #         return True
-        # return False
