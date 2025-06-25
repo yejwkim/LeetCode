@@ -24,7 +24,39 @@ class ListNode:
 
 class Solution:
     def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        return None
+        if not head or not head.next or not head.next.next:
+            return head
+        odd_end = head
+        even_start = even_end = head.next
+        cur = head.next.next
+        odd = True
+        while cur:
+            if odd:
+                next_node = cur.next
+                odd_end.next = cur
+                cur.next = even_start
+                even_end.next = next_node
+                cur = next_node
+                odd_end = odd_end.next
+            else:
+                even_end = cur
+                cur = cur.next
+            odd = not odd
+        return head
+
+    def oddEvenList2(self, head: Optional[ListNode]) -> Optional[ListNode]: # Optimal solution
+        if not head or not head.next:
+            return head
+        odd = head
+        even = head.next
+        even_head = even
+        while even and even.next:
+            odd.next = even.next
+            odd = odd.next
+            even.next = odd.next
+            even = even.next
+        odd.next = even_head
+        return head
     
 def build_linked_list(values):
     dummy = ListNode()
@@ -37,16 +69,16 @@ def build_linked_list(values):
 def main():
     test_cases = [
         [1,2,3,4,5], # [1,3,5,2,4]
-        # [2,1,3,5,6,4,7], # [2,3,6,7,1,5,4]
-        # [1],
-        # [1,2]
+        [2,1,3,5,6,4,7], # [2,3,6,7,1,5,4]
+        [1],
+        [1,2]
     ]
     solution = Solution()
     for i, values in enumerate(test_cases):
         head = build_linked_list(values)
         print(f"Test Case {i+1}")
         print("Input linked list:", head)
-        print("Output:", solution.oddEvenList(head))
+        print("Output:", solution.oddEvenList2(head))
         print()
 
 if __name__ == "__main__":
