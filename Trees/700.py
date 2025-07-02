@@ -1,4 +1,4 @@
-# Binary Tree Level Order Traversal - Medium
+# Search in a Binary Search Tree - Easy
 from typing import Optional, List
 from collections import deque
 
@@ -13,41 +13,20 @@ class TreeNode:
         return str(self.val)
 
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        if not root:
-            return []
-        queue = deque([(root, 0)])
-        res = []
-        level_nodes: List[int] = []
-        current_level = 0
-        while queue:
-            node, level = queue.popleft()
-            if level != current_level:
-                res.append(level_nodes)
-                level_nodes = []
-                current_level = level
-            level_nodes.append(node.val)
-            if node.left:
-                queue.append((node.left, level + 1))
-            if node.right:
-                queue.append((node.right, level + 1))
-        if level_nodes:
-            res.append(level_nodes)
-        return res
-
-    def levelOrder2(self, root: Optional[TreeNode]) -> List[List[int]]:
-        if not root:
-            return []
-        res, queue = [], deque([root])
-        while queue:
-            level_nodes = []
-            for _ in range(len(queue)):
-                node = queue.popleft()
-                level_nodes.append(node.val)
-                if node.left:  queue.append(node.left)
-                if node.right: queue.append(node.right)
-            res.append(level_nodes)
-        return res
+    def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]: # Recursive Approach
+        if not root or root.val == val:
+            return root
+        if val < root.val:
+            return self.searchBST(root.left, val)
+        else:
+            return self.searchBST(root.right, val)
+        
+    def searchBST2(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]: # Iterative Approach
+        while root:
+            if root.val == val:
+                return root
+            root = root.left if val < root.val else root.right
+        return None
 
 def build_binary_tree(values: List[Optional[int]]) -> Optional[TreeNode]:
     if not values:
@@ -89,19 +68,18 @@ def print_binary_tree(root: Optional[TreeNode]):
 
 def main():
     test_cases = [
-        [3,9,20,None,None,15,7], # [[3],[9,20],[15,7]]
-        [1], # [[1]]
-        [], # []
-        [1,2,3,4,5,None,8,None,None,6,7,9] # [[1],[2,3],[4,5,8],[6,7,9]]
+        ([4,2,7,1,3], 2), # [2,1,3]
+        ([4,2,7,1,3], 5) # []
     ]
     solution = Solution()
-    for i, values in enumerate(test_cases):
+    for i, (values, val) in enumerate(test_cases):
         root = build_binary_tree(values)
         print(f"Test Case {i+1}")
         print("Input (level-order):", values)
+        print("Input val:", val)
         print("Binary Tree Structure:")
         print_binary_tree(root)
-        print("Output:", solution.levelOrder2(root))
+        print("Output:", solution.searchBST2(root, val))
         print()
 
 if __name__ == "__main__":
